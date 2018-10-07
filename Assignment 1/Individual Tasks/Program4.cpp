@@ -1,3 +1,13 @@
+// Course:  CS213 - Programming II  - 2018
+// Title:   Assignment I - Task 2 - Problem 4
+// Program: Military Time
+// Author:  Ahmed Nasr Eldardery
+// Date:    7 October 2018
+// Version: 1.0
+// Student Name : Ahmed Nasr Eldardery
+// Student ID : 20170034
+// Student Group : G_2
+
 #include <iostream>
 #include <cstring>
 

@@ -2,9 +2,8 @@
 // Title:   Assignment I - Task 1 - Problem 0
 // Program: CS213-2018-A1-T1-P0
 // Purpose: Illustrating operator overloading by an example involving matricies.
-// Author:  Ahmed Nasr Eldardery
-// Date:    26 September 2018
-// Version: 2
+// Date:    14 October 2018
+// Version: 2.1
 
 //Dardery's Notes:
 //* This implementation is quite different from the one prepared by Dr. Elramly,
@@ -26,7 +25,7 @@ using namespace std;
 struct matrix
 {
 	int** data;
-	int row, col;
+	int row = 0, col = 0;
 	void allocate_memory(const int row, const int col) {
 		this->row = row;
 		this->col = col;

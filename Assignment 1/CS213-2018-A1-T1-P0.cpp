@@ -2,8 +2,9 @@
 // Title:   Assignment I - Task 1 - Problem 0
 // Program: CS213-2018-A1-T1-P0
 // Purpose: Illustrating operator overloading by an example involving matricies.
-// Date:    14 October 2018
-// Version: 2.1
+// Author:  Ahmed Nasr Eldardery
+// Date:    26 September 2018
+// Version: 2
 
 //Dardery's Notes:
 //* This implementation is quite different from the one prepared by Dr. Elramly,
@@ -99,6 +100,7 @@ struct matrix
 	}
 };
 
+//Ahmed Nasr Eldardery-----------------------------------------------------------------
 matrix operator+  (const matrix& mat1, const matrix& mat2); // Add if same dimensions
 matrix operator-  (const matrix& mat1, const matrix& mat2); // Sub if same dimensions
 matrix operator*  (const matrix& mat1, const matrix& mat2); // Multi if col1 == row2
@@ -108,12 +110,14 @@ matrix operator*  (const matrix& mat1, const int scalar);   // Multiple by scala
 
 matrix operator-  (const matrix& mat1);                     // Unary negative
 
+//---------------------------------------------------------------------------------------
+
 //redundant operators for reordering the operands
 matrix operator+  (const int scalar, const matrix& mat1);   // Add a scalar
 matrix operator-  (const int scalar, const matrix& mat1);   // Subtract a scalar
 matrix operator*  (const int scalar, const matrix& mat1);   // Multiple by scalar
 
-
+//Belal Hamdy Ezzat---------------------------------------------------------------------------
 matrix& operator+= (matrix& mat1, const matrix& mat2);      // mat1 changes and is returned
 matrix& operator-= (matrix& mat1, const matrix& mat2);      // mat1 changes and is returned
 matrix& operator*= (matrix& mat, const matrix& mat2);		// mat1 changes and is returned
@@ -125,7 +129,11 @@ matrix  operator++ (matrix& mat, int);                      // Add 1 to each ele
 matrix& operator-- (matrix& mat);    	                    // Sub 1 from each element --mat
 matrix  operator-- (matrix& mat, int);    	                // Sub 1 from each element mat--
 
+
 istream& operator>> (istream& in, matrix& mat);
+//----------------------------------------------------------------------------------------------
+
+//Adham Mamdouh Mohammed---------------------------------------------------------------------
 ostream& operator<< (ostream& out, const matrix& mat);
 
 bool   operator== (const matrix& mat1, const matrix& mat2);	// True if identical
@@ -135,6 +143,7 @@ bool   is_square(const matrix& mat);  // True if square matrix
 bool   is_symetric(const matrix& mat);  // True if square and symmetric
 bool   is_identity(const matrix& mat);  // True if square and identity
 matrix transpose(const matrix& mat);    // Return new matrix with the transpose
+//--------------------------------------------------------------------------------------------
 
 int main()
 {
@@ -194,6 +203,8 @@ int main()
 	cout << "Matrix 3 is:" << endl << mat3 << endl;
 	cout << "fail test: (shouldn't output anything)" << endl;
 	cout << mat1 + mat2;
+	mat1 += mat2;
+
 	return 0;
 }
 

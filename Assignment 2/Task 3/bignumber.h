@@ -17,14 +17,18 @@ private:
 	std::vector<char> data;
 	bool negative = false;
 	void clear();
+	friend bool biggersmaller(const bignumber &a, const bignumber &b, const bignumber*& first, const bignumber*& second);
+	friend bignumber add_digits(const bignumber& a, const bignumber& b);
+	friend bignumber subtract_digits(const bignumber& a, const bignumber& b);
+
 public:
 	bignumber();
 	bignumber(const std::string num);
 	bignumber(const long long num);
-	//bignumber operator+ (const bignumber b);
-	//bignumber operator- (const bignumber b);
-	//bignumber operator+ (const long long b);
-	//bignumber operator- (const long long b);
+	bignumber operator+ (const bignumber& b) const;
+	bignumber operator- (const bignumber& b) const;
+	//bignumber operator+ (const long long& b) const;
+	//bignumber operator- (const long long&W b) const;
 
 	friend std::ostream& operator<<(std::ostream& out, const bignumber& big);
 	friend std::istream& operator>>(std::istream& in, bignumber& big);

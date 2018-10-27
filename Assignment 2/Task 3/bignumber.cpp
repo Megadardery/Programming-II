@@ -63,8 +63,24 @@ bignumber add_digits(const bignumber& a, const bignumber& b) {
 	//Adham TODO:
 	//|first| guarenteed bigger than or equal to |second|
 	//implement adding digits and stuff
+	int n = first->data.size(), m = second->data.size();
+	bool carry = 0;	
+	
+	for (int i = 0; i < n; ++i) {
+		
+		char second_val = 0;
+		if (i < second->data.size())
+			second_val = second->data[i];
+		char digit = first->data[i] + second_val + carry;
+		(digit >= 10) ? digit -= 10, carry = 1 : carry = 0;
+		
+		res.data.push_back(digit);
+		
+		if(carry && i == n-1) res.data.push_back(carry);
 
-	return bignumber();
+	}
+
+	return res;
 }
 bignumber subtract_digits(const bignumber& a, const bignumber& b) {
 	const bignumber* first = &a;

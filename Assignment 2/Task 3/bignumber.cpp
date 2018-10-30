@@ -7,31 +7,42 @@
 // Version: N/A
 
 #include "bignumber.h"
-void bignumber::clear(){
+
+void bignumber::clear() {
 	data.clear();
 	negative = false;
 }
 
-bignumber::bignumber() {}
-
-bignumber::bignumber(const std::string num){
-
+bool bignumber::initalize_from_string(const std::string& num) {
 	int n = num.size();
-	data.resize(num.size());
+	data.resize(n);
 	for (int i = 0; i < n; ++i) {
-		int j = n - 1 - i;
-		if (!j && num[j] == '-') {
+		int j = n - 1 - i;					//j moves the opposite direction of i
+		if (j == 0 && num[j] == '-') {		//if the first character in the num is a negative sign
 			negative = 1;
 			data.pop_back();
 		}
 		else if (num[j] > '9' || num[j] < '0') {
-			throw std::invalid_argument("num contains non-numeric values");
 			clear();
-			return;
+			return false;
 		}
 		else
 			data[i] = num[j] - '0';
 	}
+	//remove leading zeros
+	while (!data.empty() && data.back() == 0)
+		data.pop_back();
+	//remove the negative sign if the number is zero.
+	if (data.empty())
+		negative = 0;
+
+	return true;
+}
+
+bignumber::bignumber() {}
+
+bignumber::bignumber(const std::string& num) {
+	initalize_from_string(num);
 }
 bignumber::bignumber(const long long num) {
 	negative = (num < 0);
@@ -48,6 +59,25 @@ bignumber bignumber::operator-(const bignumber& b) const {
 	else
 		return subtract_digits(*this, b);
 }
+bignumber bignumber::operator-() const
+{
+	bignumber temp = *this;
+	temp.negative = !temp.negative;
+	return temp;
+}
+bignumber bignumber::operator+(const long long & b) const
+{
+	//TODO : plus operator for long long
+
+	return bignumber();
+}
+bignumber bignumber::operator-(const long long & b) const
+{
+	//TODO : plus operator for long long
+
+
+	return bignumber();
+}
 bignumber bignumber::operator+ (const bignumber &b) const {
 	if (b.negative == negative)
 		return add_digits(*this, b);
@@ -55,68 +85,74 @@ bignumber bignumber::operator+ (const bignumber &b) const {
 		return subtract_digits(*this, b);
 }
 bignumber add_digits(const bignumber& a, const bignumber& b) {
-	const bignumber* first = &a;
-	const bignumber* second = &b;
-	biggersmaller(a, b, first, second);
-	bignumber res;
-	res.negative = first->negative;
-	//Adham TODO:
-	//|first| guarenteed bigger than or equal to |second|
-	//implement adding digits and stuff
-	int n = first->data.size(), m = second->data.size();
-	bool carry = 0;	
+	const bignumber* first;
+	const bignumber* second;
+	//after this call, first contains the bigger number, and second is the smaller
+	bool ret = biggersmaller(a, b, first, second);
 	
-	for (int i = 0; i < n; ++i) {
-		
-		char second_val = 0;
-		if (i < second->data.size())
-			second_val = second->data[i];
-		char digit = first->data[i] + second_val + carry;
-		(digit >= 10) ? digit -= 10, carry = 1 : carry = 0;
-		
-		res.data.push_back(digit);
-		
-		if(carry && i == n-1) res.data.push_back(carry);
+	bool negative = a.negative;
 
+	int n = first->data.size(), m = second->data.size();
+	bignumber res;
+	res.negative = negative;
+
+	bool carry = 0;
+	for (int i = 0; i < n; ++i) {
+		char second_val = 0;
+		if (i < m)
+			second_val = second->data[i];
+
+		char digit = first->data[i] + second_val + carry;
+		
+		carry = 0;
+		if (digit >= 10) {
+			digit -= 10;
+			carry = 1;
+		}
+
+		res.data.push_back(digit);
 	}
+	if (carry) res.data.push_back(carry);
 
 	return res;
 }
+
 bignumber subtract_digits(const bignumber& a, const bignumber& b) {
-	const bignumber* first = &a;
-	const bignumber* second = &b;
+	const bignumber* first;
+	const bignumber* second;
 	//after this call, first contains the bigger number, and second is the smaller
 	bool ret = biggersmaller(a, b, first, second);
 	//if a swap occured, the sign is inverted
-	bool negative = ret ^ first->negative;
+	bool negative = ret ^ a.negative;
 
 	int n = first->data.size(), m = second->data.size();
 	bignumber res;
+	res.negative = negative;
+
 	bool borrow = 0;
 	for (int i = 0; i < n; i++) {
 		char second_val = 0;
 		if (i < second->data.size())
 			second_val = second->data[i];
+
 		char digit = first->data[i] - borrow - second_val;
+
 		borrow = 0;
 		if (digit < 0) {
 			digit += 10;
 			borrow = 1;
 		}
+
 		res.data.push_back(digit);
 	}
 	while (!res.data.empty() && res.data.back() == 0)
 		res.data.pop_back();
 
-	res.negative = negative;
 	return res;
 
 }
 
 bool biggersmaller(const bignumber &a, const bignumber &b, const bignumber*& first, const bignumber*& second) {
-	first = &a;
-	second = &b;
-
 	int n = a.data.size(), m = b.data.size();
 	bool swap = 0;
 	if (n < m)	//if a has fewer digits than b
@@ -133,11 +169,15 @@ bool biggersmaller(const bignumber &a, const bignumber &b, const bignumber*& fir
 	}
 
 	if (swap) {
-		const bignumber* temp = second;
-		second = first;
-		first = temp;
+		first = &b;
+		second = &a;
+		return true;
 	}
-	return swap;
+	else {
+		first = &a;
+		second = &b;
+		return false;
+	}
 }
 
 std::ostream& operator<<(std::ostream& out, const bignumber& big) {
@@ -154,9 +194,8 @@ std::ostream& operator<<(std::ostream& out, const bignumber& big) {
 std::istream& operator>>(std::istream& in, bignumber& big) {
 	std::string num;
 	in >> num;
-		
-	new (&big) bignumber(num);
+	
+	big.initalize_from_string(num);
+
+	return in;
 }
-
-
-

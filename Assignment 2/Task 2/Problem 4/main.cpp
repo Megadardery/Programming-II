@@ -1,56 +1,13 @@
-// Program: Individual.cpp
-// Author: Ahmed Nasr Eldardery
+// Course:  CS213 - Programming II  - 2018
+// Title:   Assignment II - Task 2
+// Program: main.cpp for problem 4
+// Purpose: implementing a movie class that supports rating
+// Author:  Ahmed Nasr Eldardery
+// Date:    30 October 2018
+// Version: 1.0
 
 #include <iostream>
-#include <string>
-
-enum MPAA_Rating {
-	G, PG, PG13, R
-};
-class Movie {
-private:
-	static const int MAX_RATING = 5;
-
-	std::string name;
-	MPAA_Rating mpaa;
-	int nRatings[MAX_RATING];
-public:
-	Movie(std::string n, MPAA_Rating rat) {
-		name = n;
-		mpaa = rat;
-		for (int i = 0; i < MAX_RATING; ++i)
-			nRatings[i] = 0;
-	}
-	void set_name(std::string n) {
-		name = n;
-	}
-	std::string get_name() {
-		return name;
-	}
-	MPAA_Rating get_MPAArating_int() {
-		return mpaa;
-	}
-	std::string get_MPAArating() {
-		const std::string arr[] = { "G","PG","PG-13","r" };
-		return arr[mpaa];
-	}
-	void set_MPAA_rating(MPAA_Rating rat) {
-		mpaa = rat;
-	}
-	void add_rating(int rating, int n = 1) {
-		if (rating > 0 && rating <= MAX_RATING)
-			nRatings[rating - 1] += n;
-	}
-	double get_average() {
-		double sum = 0;
-		long long count = 0;
-		for (int i = 0; i < MAX_RATING; ++i){
-			sum += (nRatings[i] * (i+1));
-			count += nRatings[i];
-		}
-		return sum / count;
-	}
-};
+#include "Movie.h"
 int main() {
 	Movie movie1("Inception", PG);
 	Movie movie2("Twilight", G);
@@ -58,7 +15,7 @@ int main() {
 	movie1.add_rating(3, 3);
 	movie1.add_rating(4, 23);
 	movie1.add_rating(5, 15);
-	
+
 	movie2.add_rating(1, 33);
 	movie2.add_rating(2, 40);
 	movie2.add_rating(3, 25);
@@ -73,9 +30,6 @@ int main() {
 
 }
 /*
-
-
-
  Consider a class Movie that contains information about a movie. The class has the following attributes:
 ■ The movie name
 ■ The MPAA rating (for example, G, PG, PG-13, r)
@@ -92,7 +46,7 @@ then the number of people that rated the movie as a 3 should be incremented by 1
 Write another function, getAverage, that returns the average value for all of the movie ratings.
 Finally, add a constructor that allows the programmer to create the object with a specified name and MPAA rating.
 The number of people rating the movie should be set to 0 in the constructor.
-Test the class by writing a main function that creates at least two movie objects, 
+Test the class by writing a main function that creates at least two movie objects,
 adds at least five ratings for each movie, and outputs the movie name, MPAA rating, and average rating for each movie object.
- 
+
  */

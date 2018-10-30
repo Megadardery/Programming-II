@@ -1,3 +1,10 @@
+// Course:  CS213 - Programming II  - 2018
+// Title:   Assignment II - Task 2
+// Program: Movie.h for problem 4
+// Purpose: implementing a movie class that supports rating
+// Author:  Ahmed Nasr Eldardery
+// Date:    30 October 2018
+// Version: 1.0
 #ifndef _MOVIE_H
 #define _MOVIE_H
 #include <string>

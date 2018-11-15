@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1446667744 source:c:\users\belal\desktop\butt3\main.cpp
+	<iostream>
+
+1542288883 source:c:\users\belal\desktop\butt3\src\food.cpp
+	"Food.h"
+
+1542288804 c:\users\belal\desktop\butt3\include\food.h
+	<string>
+
+1542286730 source:c:\users\belal\desktop\butt3\src\money.cpp
+	"Money.h"
+
+1542286818 c:\users\belal\desktop\butt3\include\money.h
+
+1542287350 source:c:\users\belal\desktop\butt3\src\vmachine.cpp
+	"VMachine.h"
+
+1542287425 c:\users\belal\desktop\butt3\include\vmachine.h
+	"Food.h"
+	"Money.h"
+

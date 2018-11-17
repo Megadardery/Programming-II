@@ -3,7 +3,7 @@ VM_Wrapper::VM_Wrapper(VendingMachine & vm, std::ostream & out, std::istream & i
 	: in(in), out(out), vm(vm)
 {
 }
-
+// showing the menu of different choices
 void VM_Wrapper::showMenu()
 {
 	using std::endl;
@@ -12,12 +12,12 @@ void VM_Wrapper::showMenu()
 		out << endl;
 		int choice;
 		while (true) {
-			choice = getFood();
+			choice = getFood(); // prints the different choices and returns the choice -1
 			if (choice == -1) {
 				out << "Thanks for using our Vending Machine!\n";
 				return;
 			}
-			if (vm.getItem(choice).getQuantity() <= 0)
+			if (vm.getItem(choice).getQuantity() <= 0) // if he wants an item out of stock it warns him and gives him another try
 				out << "Out of stock :( Please choose another item.\n";
 			else
 				break;
@@ -27,7 +27,7 @@ void VM_Wrapper::showMenu()
 		if (src.getTotalValue() == 0) continue;
 		Money rem;
 		BuyResult result = vm.buyItem(choice, src, rem);
-		if (result == BuyResult::NoChangeAvailable) {
+		if (result == BuyResult::NoChangeAvailable) { // if there is no change
 			out << "Sorry, the machine doesn't have enough change for you. Please take money and enter exact amount.\n";
 			out << "In the coin dispenser: " << rem << endl;
 		}
@@ -38,7 +38,7 @@ void VM_Wrapper::showMenu()
 
 	}
 }
-
+// enters the buyers money
 Money VM_Wrapper::inputMoney(Food item, Money mon)
 {
 	using std::endl;

@@ -11,50 +11,30 @@ VendingMachine::VendingMachine(Food* items, const Money& initialCoins)
 
 	coins = initialCoins;
 }
+bool VendingMachine::convertMoneyRecurse(int qty, int taken, int i, Money& ans) const
+{
+	if (i == -1) return qty == 0;
+	const int coinValue = Money::CoinValue[i];
+
+	if (qty >= coinValue && taken < coins[i]) {
+		if (convertMoneyRecurse(qty - coinValue, taken + 1, i, ans)) {
+			if (ans[i] == 0)
+				ans[i] = taken + 1;
+			return 1;
+		}
+	}
+	if (convertMoneyRecurse(qty, 0, i - 1, ans)) {
+		if (ans[i] == 0)
+			ans[i] = taken;
+		return 1;
+	}
+	return 0;
+}
+
 bool VendingMachine::convertMoney(int curr, Money& ans) const
 {
-    int tmpcurr;
-    bool flag = true ,startflag = false;
-    for (int start = 0 ; flag && start<ans.COIN_COUNT ; ++start)
-    {
-        tmpcurr = curr;
-        Money tmpans = ans;
-        for (int i = start ; (i%ans.COIN_COUNT)!=start || !startflag ; ++i)
-        {
-            startflag = true;
-            i%=ans.COIN_COUNT;
-            const int& val = tmpans.CoinValue[i];
-            int& qty = tmpans[i];
-            int newqty = tmpcurr/val;
-            if (newqty>qty)
-            {
-                newqty = qty;
-                qty = 0;
-            }
-            else
-            {
-                qty-=newqty;
-            }
-            tmpcurr-= (newqty*val);
-            flag = tmpcurr;
-
-        }
-        startflag =0;
-        if (!flag)
-        {
-            //To print the change if needed
-           std :: cout << "Here is your change : "<<std :: endl;
-            for (int i = 0 ; i<ans.COIN_COUNT ; ++i)
-            {
-                int val = ans.CoinValue[i] - tmpans.CoinValue[i];
-                int q = ans[i] - tmpans[i];
-                std :: cout << val << " " << q << std :: endl;
-            }
-            ans = tmpans;
-            return 1;
-        }
-    }
-	return 0;
+	ans = Money(0);
+	return convertMoneyRecurse(curr, 0, Money::COIN_COUNT - 1, ans);
 }
 BuyResult VendingMachine::buyItem(int idx, const Money& src, Money& rem)
 {
@@ -84,4 +64,9 @@ BuyResult VendingMachine::buyItem(int idx, const Money& src, Money& rem)
 const Food& VendingMachine::getItem(int idx)
 {
 	return items[idx];
+}
+
+Money VendingMachine::getMoney() const
+{
+	return coins;
 }

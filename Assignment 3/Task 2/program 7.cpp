@@ -1,5 +1,5 @@
 // Course:  CS213 - Programming II  - 2018
-// Title:   Assignment 3 - Task 2 - Problem 4
+// Title:   Assignment 3 - Task 2 - Problem 7
 // Program: Problem 7.cpp
 // Purpose: Recursive Permute String
 // Author:  Belal Hamdy Ezzat

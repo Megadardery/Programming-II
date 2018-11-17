@@ -5,7 +5,7 @@
 class VM_Wrapper
 {
 public:
-	VM_Wrapper(VendingMachine& vm, std::ostream &out, std::istream &in);
+	VM_Wrapper(VendingMachine& vm, std::ostream &out, std::istream &in); // acts like the screen which the user interacts with it
 	void showMenu();
 
 protected:

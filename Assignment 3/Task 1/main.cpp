@@ -3,6 +3,7 @@
 using namespace std;
 int main()
 {
+    // array that contains the items and the price of each one and the quantity is 10 by default
 	Food items[] = {
 		Food("Rocket Coke",3.5),
 		Food("Schweppes",6.0),
@@ -15,7 +16,7 @@ int main()
 		Food("Chocolate Bar",7.25),
 		Food("Eat Yo Money",15.0)
 	};
-
+    // making the quantity of each banknote by 3 then changing some quantities
 	Money change(3);
 	change[TWO_HUNDREDS] = 0;
 	change[HUNDREDS] = 1;
@@ -23,9 +24,9 @@ int main()
 
 	cout << "Machine Inital Money: " << change.getTotalValue() << endl;
 	cout << change << endl;
-	VendingMachine vm(items, change);
+	VendingMachine vm(items, change); // making new machine of the current items and money
 
-	VM_Wrapper wrapper(vm, cout, cin);
+	VM_Wrapper wrapper(vm, cout, cin); // simulating the machine functions by another class
 
 	wrapper.showMenu();
 	change = vm.getMoney();

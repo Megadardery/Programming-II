@@ -3,8 +3,8 @@
 // Program: bignumber.cpp
 // Purpose: bignumber class actual code file
 // Author:  Ahmed Nasr Eldardery, Belal Hamdy Ezzat, Adham Mamdouh Mohammed
-// Date:    N/A
-// Version: N/A
+// Date:    1st November 2018
+// Version: 1.0
 
 #include "bignumber.h"
 
@@ -67,16 +67,11 @@ bignumber bignumber::operator-() const
 }
 bignumber bignumber::operator+(const long long & b) const
 {
-	//TODO : plus operator for long long
-
-	return bignumber();
+	return *this + bignumber(b);
 }
 bignumber bignumber::operator-(const long long & b) const
 {
-	//TODO : plus operator for long long
-
-
-	return bignumber();
+	return *this - bignumber(b);
 }
 bignumber bignumber::operator+ (const bignumber &b) const {
 	if (b.negative == negative)
@@ -151,7 +146,6 @@ bignumber subtract_digits(const bignumber& a, const bignumber& b) {
 	return res;
 
 }
-
 bool biggersmaller(const bignumber &a, const bignumber &b, const bignumber*& first, const bignumber*& second) {
 	int n = a.data.size(), m = b.data.size();
 	bool swap = 0;
